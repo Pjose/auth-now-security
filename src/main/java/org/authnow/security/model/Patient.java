@@ -18,8 +18,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "patient")
-public class Patient{
+public class Patient implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Long id;

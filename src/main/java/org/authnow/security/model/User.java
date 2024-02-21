@@ -7,9 +7,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
@@ -27,11 +29,12 @@ import lombok.NoArgsConstructor;
 @Table(name = "_user")
 public class User implements UserDetails{
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     private UserProfile userProfile;
     private String email;
     private String password;
