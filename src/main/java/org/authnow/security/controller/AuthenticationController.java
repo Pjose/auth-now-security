@@ -1,5 +1,7 @@
 package org.authnow.security.controller;
 
+import java.io.IOException;
+
 import org.authnow.security.request.AuthenticationRequest;
 import org.authnow.security.response.AuthenticationResponse;
 import org.authnow.security.request.RegisterRequest;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -21,16 +25,24 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-        @RequestBody RegisterRequest request
-    ) {
+            @RequestBody RegisterRequest request
+        ) {
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-        @RequestBody AuthenticationRequest request
-    ) {
+            @RequestBody AuthenticationRequest request
+        ) {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @PostMapping("/refresh-token")
+    public void refreshToken(
+            HttpServletRequest request,
+            HttpServletResponse response
+        ) throws IOException {
+        service.refreshToken(request, response);
     }
 
 }

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserProfileController {
 
     @GetMapping
-    public ResponseEntity<String> sayHello() {
-        return ResponseEntity.ok("Hello from secured endpoint");
+    public ResponseEntity<String> getUserProfile() {
+        return ResponseEntity.ok("User profile from secured endpoint");
     }
     
 }
