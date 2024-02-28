@@ -12,6 +12,11 @@ public interface UserMapper {
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping( target = "password", ignore = true)
-    User userDtoToUser(UserDTO userDto);
+    @Mapping( target = "tokens", ignore = true)
+    @Mapping( target = "oAuthKey", source = "OAuthKey")
+    User toUser(UserDTO userDto);
+
+    @Mapping( target = "oAuthKey", source = "OAuthKey")
+    UserDTO toUserDTO(User user);
     
 }

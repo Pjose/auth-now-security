@@ -18,9 +18,6 @@ import org.junit.jupiter.api.Test;
 
 class UserProfileMapperTest {
 
-    UserProfile userProfile;
-    Patient patient;
-
     Long id;
     String name, phone, workspace, patientProfile;
     boolean hasDrive;
@@ -44,19 +41,19 @@ class UserProfileMapperTest {
     }
 
     @Test
-    void shouldMapUserProfileDtoToUserProfile() {
+    void shouldMapUserProfileDTO_toUserProfile() {
 
         //given
         medicalEvents.add("Recieved Flu shot on 2/3/2023");
         medicalEvents.add("Had COVID-19 on 12/30/2023");
-        patient = new Patient(1L, name, medicalEvents, patientProfile);
+        Patient patient = new Patient(1L, name, medicalEvents, patientProfile);
 
         patients.add(patient);
 
         UserProfileDTO userProfileDto = new UserProfileDTO(id, name, phone, dob, workspace, patients);
 
         //when
-        UserProfile userProfile = UserProfileMapper.INSTANCE.userProfileDtoToUserProfile(userProfileDto);
+        UserProfile userProfile = UserProfileMapper.INSTANCE.toUserProfile(userProfileDto);
        
         //then
         assertNotNull(userProfile);
@@ -66,6 +63,31 @@ class UserProfileMapperTest {
         assertEquals(dob, userProfile.getDob());
         assertEquals(workspace, userProfile.getWorkspace());
         assertEquals(patients, userProfile.getPatients());
+    }
+
+    @Test
+    void shouldMapUserProfile_toUserProfileDTO() {
+
+        //given
+        medicalEvents.add("Recieved Flu shot on 2/3/2023");
+        medicalEvents.add("Had COVID-19 on 12/30/2023");
+        Patient patient = new Patient(1L, name, medicalEvents, patientProfile);
+
+        patients.add(patient);
+
+        UserProfile userProfile = new UserProfile(id, name, phone, dob, workspace, patients);
+
+        //when
+        UserProfileDTO userProfileDTO = UserProfileMapper.INSTANCE.toUserProfileDTO(userProfile);
+       
+        //then
+        assertNotNull(userProfileDTO);
+        assertEquals(id, userProfileDTO.getId());
+        assertEquals(name, userProfileDTO.getName());
+        assertEquals(phone, userProfileDTO.getPhone());
+        assertEquals(dob, userProfileDTO.getDob());
+        assertEquals(workspace, userProfileDTO.getWorkspace());
+        assertEquals(patients, userProfileDTO.getPatients());
     }
 
 }

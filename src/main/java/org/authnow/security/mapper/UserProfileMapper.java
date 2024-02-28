@@ -10,6 +10,8 @@ public interface UserProfileMapper {
 
     UserProfileMapper INSTANCE = Mappers.getMapper(UserProfileMapper.class);
 
-    UserProfile userProfileDtoToUserProfile(UserProfileDTO userProfileDto);
+    UserProfile toUserProfile(UserProfileDTO userProfileDto);
+
+    UserProfileDTO toUserProfileDTO(UserProfile userProfile);
 
 }

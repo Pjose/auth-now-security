@@ -6,12 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.authnow.security.dto.UserDTO;
 import org.authnow.security.model.Patient;
+import org.authnow.security.model.Role;
+import org.authnow.security.model.Token;
 import org.authnow.security.model.User;
 import org.authnow.security.model.UserProfile;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +23,8 @@ import org.junit.jupiter.api.Test;
 
 class UserMapperTest {
 
-    UserDTO userDto;
-    UserProfile userProfile;
-    Patient patient;
-
     Long id;
-    String name, phone, email, activeSubscription, userHistory, oAuthKey, driveAccessKey, 
+    String name, phone, email, password, activeSubscription, userHistory, oAuthKey, driveAccessKey, 
         role, workspace, patientProfile;
     boolean hasDrive;
     DateFormat dateFormat;
@@ -32,6 +32,7 @@ class UserMapperTest {
     Set<String> medicalEvents;
     Patient patient_1;
     Set<Patient> patients;
+    List<Token> tokens;
 
     @BeforeEach
     void initializeObjectsBeforeEachTest() throws ParseException {
@@ -59,19 +60,19 @@ class UserMapperTest {
         patient_1 = new Patient(1L, name, medicalEvents, patientProfile);
         patients.add(patient_1);
 
-        userProfile = null;
-        userDto = null;
+        tokens = new ArrayList<>();
+
     }
 
     @Test
-    void shouldMapUserDtoToUser() {
+    void shouldMapUserDTO_toUser() {
 
         //given
-        userProfile = new UserProfile(id, name, phone, dob, workspace, patients);
-        userDto = new UserDTO(id, userProfile, email, hasDrive, activeSubscription, userHistory, oAuthKey, driveAccessKey, role);
+        UserProfile userProfile = new UserProfile(id, name, phone, dob, workspace, patients);
+        UserDTO userDto = new UserDTO(id, userProfile, email, hasDrive, activeSubscription, userHistory, oAuthKey, driveAccessKey, role);
 
         //when
-        User user = UserMapper.INSTANCE.userDtoToUser(userDto);
+        User user = UserMapper.INSTANCE.toUser(userDto);
 
         //then
         assertNotNull(user);
@@ -83,6 +84,30 @@ class UserMapperTest {
         assertEquals(userHistory, user.getUserHistory());
         assertEquals(oAuthKey, user.getOAuthKey());
         assertEquals(driveAccessKey, user.getDriveAccessKey());
+        
+    }
+
+    @Test
+    void shouldMapUser_toUserDTO() {
+
+        //given
+        UserProfile userProfile = new UserProfile(id, name, phone, dob, workspace, patients);
+        User user = new User(id, userProfile, email, password, hasDrive, activeSubscription, userHistory, oAuthKey, driveAccessKey, Role.ADMIN, tokens);
+
+        //when
+        UserDTO userDTO = UserMapper.INSTANCE.toUserDTO(user);
+
+        //then
+        assertNotNull(userDTO);
+        assertEquals(id, userDTO.getId());
+        assertEquals(userProfile, userDTO.getUserProfile());
+        assertEquals(email, userDTO.getEmail());
+        assertEquals(hasDrive, userDTO.isHasDrive());
+        assertEquals(activeSubscription, userDTO.getActiveSubscription());
+        assertEquals(userHistory, userDTO.getUserHistory());
+        assertEquals(oAuthKey, userDTO.getOAuthKey());
+        assertEquals(driveAccessKey, userDTO.getDriveAccessKey());
+        assertEquals(Role.ADMIN.name(), userDTO.getRole());
         
     }
 

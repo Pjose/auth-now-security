@@ -13,8 +13,6 @@ import org.junit.jupiter.api.Test;
 
 class PatientMapperTest {
 
-    PatientDTO patientDto;
-
     Long id;
     String name, patientProfile;
     Set<String> medicalEvents;
@@ -28,16 +26,16 @@ class PatientMapperTest {
     }
 
     @Test
-    void shouldMapPatientDtoToPatient() {
+    void shouldMapPatientDTO_toPatient() {
         
         //given
         medicalEvents.add("Recieved Flu shot on 2/3/2023");
         medicalEvents.add("Had COVID-19 on 12/30/2023");
 
-        patientDto = new PatientDTO(id, name, medicalEvents, patientProfile);
+        PatientDTO patientDto = new PatientDTO(id, name, medicalEvents, patientProfile);
 
         //when
-        Patient patient = PatientMapper.INSTANCE.patientDtoToPatient(patientDto);
+        Patient patient = PatientMapper.INSTANCE.toPatient(patientDto);
     
         //then
         assertNotNull(patient);
@@ -45,5 +43,25 @@ class PatientMapperTest {
         assertEquals(name, patient.getName());
         assertEquals(medicalEvents, patient.getMedicalEvents());
         assertEquals(patientProfile, patient.getPatientProfile());
+    }
+
+    @Test
+    void shouldMapPatient_toPatientDTO() {
+
+        //given
+        medicalEvents.add("Recieved Flu shot on 2/3/2023");
+        medicalEvents.add("Had COVID-19 on 12/30/2023");
+
+        Patient patient = new Patient(id, name, medicalEvents, patientProfile);
+
+        //when
+        PatientDTO patientDTO = PatientMapper.INSTANCE.toPatientDTO(patient);
+    
+        //then
+        assertNotNull(patientDTO);
+        assertEquals(id, patientDTO.getId());
+        assertEquals(name, patientDTO.getName());
+        assertEquals(medicalEvents, patientDTO.getMedicalEvents());
+        assertEquals(patientProfile, patientDTO.getPatientProfile());
     }
 }
