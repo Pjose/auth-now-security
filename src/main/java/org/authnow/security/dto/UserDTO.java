@@ -24,6 +24,5 @@ public class UserDTO {
     private String userHistory;
     private String oAuthKey;
     private String driveAccessKey;
-    private Role role;
-    private List<Token> tokens;
+    private String role;
 }
