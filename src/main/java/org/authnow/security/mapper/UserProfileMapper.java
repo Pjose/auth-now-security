@@ -1,0 +1,15 @@
+package org.authnow.security.mapper;
+
+import org.authnow.security.dto.UserProfileDTO;
+import org.authnow.security.model.UserProfile;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface UserProfileMapper {
+
+    UserProfileMapper INSTANCE = Mappers.getMapper(UserProfileMapper.class);
+
+    UserProfile userProfileDtoToUserProfile(UserProfileDTO userProfileDto);
+
+}

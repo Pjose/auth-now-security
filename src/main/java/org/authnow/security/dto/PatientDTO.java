@@ -1,19 +1,12 @@
 package org.authnow.security.dto;
 
-import java.util.HashSet;
+import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record PatientDTO(
+    Long id,
+    String name,
+    Set<String> medicalEvents,
+    String patientProfile
+) {
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class PatientDTO {
-
-    private String name;
-    private HashSet<String> medicalEvents;
-    private String patientProfile;
 }

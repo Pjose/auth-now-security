@@ -1,7 +1,7 @@
 package org.authnow.security.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Patient implements Serializable{
     @GeneratedValue
     private Long id;
     private String name;
-    private HashSet<String> medicalEvents;
+    private Set<String> medicalEvents;
     private String patientProfile;
 
 }

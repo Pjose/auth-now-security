@@ -2,19 +2,12 @@ package org.authnow.security.dto;
 
 import org.authnow.security.model.User;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public record TokenDTO(
+    Integer id,
+    String token,
+    boolean revoked,
+    boolean expired,
+    User user
+) {
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class TokenDTO {
-
-    private String token;
-    private boolean revoked;
-    private boolean expired;
-    private User user;
 }
