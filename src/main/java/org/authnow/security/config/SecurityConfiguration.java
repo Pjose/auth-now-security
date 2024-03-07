@@ -36,7 +36,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**", "/templates/images/**",};
+    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**"};
     private static final String URI_PATTERN = "/api/v1/management/**";
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
@@ -47,9 +47,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req ->
-                        req.requestMatchers(WHITE_LIST_URL)
-                                .permitAll()
+                 .authorizeHttpRequests(req ->
+                        req.requestMatchers(WHITE_LIST_URL).permitAll()
                                 .requestMatchers(URI_PATTERN).hasAnyRole(ADMIN.name(), MANAGER.name())
                                 .requestMatchers(GET, URI_PATTERN).hasAnyAuthority(ADMIN_READ.name(), MANAGER_READ.name())
                                 .requestMatchers(POST, URI_PATTERN).hasAnyAuthority(ADMIN_CREATE.name(), MANAGER_CREATE.name())
@@ -71,4 +70,5 @@ public class SecurityConfiguration {
 
         return http.build();
     }
+
 }
