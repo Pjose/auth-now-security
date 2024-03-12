@@ -5,7 +5,7 @@ import org.authnow.security.model.UserProfile;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface UserProfileMapper {
 
     UserProfileMapper INSTANCE = Mappers.getMapper(UserProfileMapper.class);

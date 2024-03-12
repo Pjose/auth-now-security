@@ -3,7 +3,7 @@ package org.authnow.security.controller;
 import lombok.RequiredArgsConstructor;
 
 import org.authnow.security.request.ChangePasswordRequest;
-import org.authnow.security.service.UserService;
+import org.authnow.security.service.UserServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +17,7 @@ import java.security.Principal;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService service;
+    private final UserServiceImpl service;
 
     @PatchMapping
     public ResponseEntity<?> changePassword(
