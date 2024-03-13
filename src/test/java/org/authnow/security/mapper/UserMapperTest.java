@@ -2,6 +2,7 @@ package org.authnow.security.mapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,7 +36,7 @@ class UserMapperTest {
     List<Token> tokens;
 
     @BeforeEach
-    void initializeObjectsBeforeEachTest() throws ParseException {
+    void setUp() throws ParseException {
         id = 101L;
         email = "john_doe@email.com";
         hasDrive = true;
@@ -85,6 +86,19 @@ class UserMapperTest {
         assertEquals(oAuthKey, user.getOAuthKey());
         assertEquals(driveAccessKey, user.getDriveAccessKey());
         
+    }
+
+    @Test
+    void should_map_userDTO_to_user_when_userDTO_is_null() {
+        //given
+        UserDTO userDto = null;
+
+        //when
+        User user = UserMapper.INSTANCE.toUser(userDto);
+
+        //then
+        assertNull(user);
+
     }
 
     @Test

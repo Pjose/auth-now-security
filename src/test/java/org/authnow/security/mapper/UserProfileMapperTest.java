@@ -27,7 +27,7 @@ class UserProfileMapperTest {
     Set<Patient> patients;
 
     @BeforeEach
-    void initializeObjectsBeforeEachTest() throws ParseException {
+    void setUp() throws ParseException {
         id = 1L;
         name = "John Doe";
         phone = "987-654-3210";

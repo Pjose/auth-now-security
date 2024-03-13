@@ -18,7 +18,7 @@ class PatientMapperTest {
     Set<String> medicalEvents;
 
     @BeforeEach
-    void initializeVariablesBeforeEach() {
+    void setUp() {
         id = 1L;
         name = "John Doe";
         patientProfile = "Dummy patient profile";
